@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<script>
+		src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.2/jquery.min.js">	
+	</script>
+	<title>Calculator</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1.0">
+	<style>
+		
+		.Erase
+		{
+			border: none;
+			background: #7b38d8;
+			font-family: Arial, Helvetica, sans-serif;
+			color: #ffffff !important;
+			font-weight: 100;
+			padding: 20px;
+			text-transform: uppercase;
+			border-radius: 6px;
+			
+			
+		}
+
+		.Erase:hover 
+		{
+			color: #404040 !important;
+			font-weight: 700 !important;
+			letter-spacing: 3px;
+			background: none;
+			-webkit-box-shadow: 0px 5px 40px -10px rgba(0,0,0,0.57);
+			-moz-box-shadow: 0px 5px 40px -10px rgba(0,0,0,0.57);
+			transition: all 0.3s ease 0s;
+		}
+		.container 
+		{
+			position: absolute;
+			top:50%;
+			left:50%;
+			margin-left: -65px;
+			margin-top: -20px;
+			width: 130px;
+			height: 40px;
+			text-align: center;
+		}
+		.button 
+		{
+			display: inline-block;
+			background-color: #7b38d8;
+			border-radius: 20px;
+			border:none;
+			color: #FFFFFF;
+			text-align: center;
+			font-size: 28px;
+			padding: 20px;
+			width: 200px;
+			transition: all 0.5s;
+			cursor: pointer;
+			margin: 5px;
+		}
+
+		.button span
+		{
+			cursor: pointer;
+			display: inline-block;
+			position: relative;
+			transition: 0.5s;
+		}
+
+		.button span:after
+		{
+			content: '\00bb';
+			position: absolute;
+			opacity: 0;
+			top: 0;
+			right: -20px;
+			transition: 0.5s;
+		}
+
+		.button:hover span
+		{
+			padding-right: 25px;
+		}
+
+		.button:hover span:after
+		{
+			opacity: 1;
+			right: 0;
+		}
+
+	
+		input[type="text"]
+		{
+			padding: 10px 50px;
+			margin-top: 10px;
+			color:black;
+			background-color: rgb(252, 135, 246);
+			width:50%;
+			border: none;
+		}
+		#main
+		{
+			margin-top: 20px;
+			margin-left: 30%;
+		}
+		#cv
+		{	
+			padding: 10px 50px;
+			margin-top: 60px;
+			margin-left:30%;
+			color:ivory;
+			background-color: #bc97f0 ;
+			width:25%;
+			border: none;
+
+		}
+		body{
+			background-color: #831515;
+			padding: 0px;
+			margin: 0px;
+		}
+		h1{
+			margin-left: 35%;
+			color: white;
+		}
+
+		
+
+
+		
+
+	</style>
+</head>
+<body>
+
+	<h1>A simple base converter application.</h1>
+		
+
+		<div>
+				<form id="main">
+					<input type="text" name="value" id="val" placeholder="Enter the Value">
+					<input type="text" name="from" id="from" placeholder="From Base">
+					<input type="text" name="to" id="to" placeholder="To Base"><br>
+				</form>
+		  </div>
+	
+	<div class="erase_button" style="vertical-align:bottom" >
+		<a onclick="erase()" class="Erase" >ERASE</a>
+	</div>
+	
+	
+	
+	<div class="container">
+		<button class="button" style="vertical-align:middle" onclick="calc()"><span>Convert &#8594;</span></button>
+	</div>
+
+	<div class="op">
+			<input class="out" type="text" name="convrtdval" id="cv" style="vertical-align:middle" placeholder="Converted Value">
+	</div>
+
+	
+	<script type="text/javascript">
+		
+		function calc()
+		{
+			v=document.getElementById('val').value;
+			f=document.getElementById('from').value;
+			t=document.getElementById('to').value;
+			
+			
+			l=v.split('.');
+			if(l.length==1)
+			{
+				x=parseInt(v,f);
+				out=x.toString(t);
+			}
+			else if (l.length==2)
+			{
+				l1=l[0];
+				l2=l[1];
+				x1=parseInt(l1,f);
+				//x2=parseInt(l2,f);
+				x2=0;
+				
+				for(var i=1;i<=l2.length;i++)
+				{
+					x2+=parseInt(l2[i-1])*(f**(-i));
+				}
+
+				y1=x1.toString(t);
+				//y2=x2.toString(t);
+				i=0;
+				var y2=[];
+				while(i<6)
+				{
+					tmp=x2*t;
+					a=parseInt(tmp);
+					y2[i]=a.toString(t);
+					if(tmp==a)
+						break;
+					x2=tmp-a;
+					i++;
+				}
+		
+				out=y1+'.'+y2.join('');
+			}
+			document.getElementById('cv').value=out;			
+			document.getElementById('val').value='';
+			document.getElementById('from').value='';
+			document.getElementById('to').value='';
+		}
+		function erase()
+		{
+			document.getElementById('cv').value=" ";			
+		}
+		
+
+
+				
+	</script>
+</body>
+</html>
